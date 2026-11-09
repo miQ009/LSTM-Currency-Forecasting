@@ -1,1 +1,1 @@
-{"train_end": "2025-06-24", "time_step": 60}
+{"train_end": "2025-06-24", "time_step": 60, "features": ["Close", "High", "Low"], "archs": ["LSTM", "GRU", "BiLSTM"]}
