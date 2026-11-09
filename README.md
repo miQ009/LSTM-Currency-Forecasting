@@ -2,7 +2,7 @@
 
 A class project that uses an LSTM (Long Short-Term Memory) neural network to forecast foreign exchange rates from historical data, with an interactive Streamlit web app.
 
-**Live demo:** _add your Streamlit link here_
+**Live demo:** https://miq-lstm-currency-forecasting.streamlit.app/
 
 ## Overview
 
@@ -68,4 +68,4 @@ This project is for educational purposes only and is **not** financial advice.
 
 ## Author
 
-_Your name_
+miq
