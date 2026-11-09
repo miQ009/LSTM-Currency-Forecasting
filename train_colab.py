@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 from sklearn.preprocessing import MinMaxScaler
+import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Input, LSTM, GRU, Bidirectional, Dense
 
@@ -17,6 +18,7 @@ TIME_STEP = 60
 EPOCHS = 20
 FEATURES = ["Close", "High", "Low"]   # Close MUST stay first (it is the target)
 
+tf.keras.utils.set_random_seed(42)   # same results on every run
 os.makedirs("models", exist_ok=True)
 
 def make_windows(arr, ts):
