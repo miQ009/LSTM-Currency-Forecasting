@@ -1,52 +1,71 @@
-# Currency Prediction Using LSTM
+# 💱 Currency Prediction Using LSTM
 
-A simple class project that uses an LSTM (Long Short-Term Memory) neural network to predict the USD/INR currency exchange rate using historical data.
+A class project that uses an LSTM (Long Short-Term Memory) neural network to forecast foreign exchange rates from historical data, with an interactive Streamlit web app.
+
+**Live demo:** _add your Streamlit link here_
 
 ## Overview
 
-This project uses historical USD/INR exchange rate data obtained from Yahoo Finance and applies an LSTM model to predict future exchange rates. 
+Historical closing prices are downloaded from Yahoo Finance and used to train an LSTM model. The app shows how well the model performs on unseen data and forecasts the next few business days.
 
-The model is trained on historical closing prices and generates predictions for the next 7 days.
-
-## Technologies Used
-
-* **Python**
-* **yfinance**
-* **Pandas**
-* **NumPy**
-* **Matplotlib**
-* **Scikit-learn**
-* **TensorFlow / Keras**
+Supported pairs: USD/INR, EUR/USD, GBP/USD, USD/JPY (easy to extend).
 
 ## Features
 
-* Fetches historical USD/INR exchange rate data.
-* Normalizes data using `MinMaxScaler`.
-* Creates sequences using a 60-day sliding window.
-* Trains an LSTM neural network.
-* Visualizes actual vs. predicted exchange rates.
-* Predicts exchange rates for the next 7 days.
+* Pulls live historical data with `yfinance`
+* Normalizes data with `MinMaxScaler` (fit on training data only, to avoid data leakage)
+* 60-day sliding window sequences
+* Two-layer LSTM model built with TensorFlow / Keras
+* Out-of-sample evaluation with RMSE, MAE and MAPE
+* Interactive charts (Plotly): actual vs. predicted, plus 1–30 day forecast
+* Downloadable forecast as CSV
 
-## Installation
+## Project Structure
 
-Install the required libraries:
-
-```bash
-pip install yfinance pandas numpy matplotlib scikit-learn tensorflow
+```
+├── app.py              # Streamlit web app (loads pre-trained models)
+├── train_colab.py      # Training script (run in Google Colab)
+├── models/             # Saved .keras models, scalers and metadata
+├── requirements.txt
+└── README.md
 ```
 
-## How to Run
+## How It Works
 
-Run the Python file:
+1. **Train:** `train_colab.py` downloads data, trains one model per pair, and saves the model, scaler and training cutoff date to `models/`.
+2. **Serve:** `app.py` loads the saved models, fetches the latest data, evaluates on dates after the training cutoff, and forecasts ahead.
+
+Training is done separately so the deployed app stays lightweight and starts quickly.
+
+## Installation & Running Locally
 
 ```bash
-python currency_prediction.py
+git clone <your-repo-url>
+cd <your-repo-folder>
+pip install -r requirements.txt
+streamlit run app.py
 ```
+
+To retrain or add currency pairs, edit `PAIRS` in `train_colab.py`, run it in Colab, and replace the `models/` folder with the downloaded one.
+
+## Technologies Used
+
+Python, Streamlit, TensorFlow / Keras, yfinance, Pandas, NumPy, Scikit-learn, Plotly
+
+## Limitations
+
+* Exchange rates are driven by news, policy and market events that price history alone cannot capture.
+* LSTMs on this kind of data mostly learn "tomorrow ≈ today", so a good-looking chart does not mean real predictive power.
+* Multi-day forecasts feed predictions back as inputs, so errors compound and later days are less reliable.
+
+## Disclaimer
+
+This project is for educational purposes only and is **not** financial advice.
 
 ## Data Source
 
-* **Yahoo Finance** – Currency Markets
+[Yahoo Finance – Currencies](https://finance.yahoo.com/markets/currencies/)
 
-## Note
+## Author
 
-This project was developed as a small academic/class project for learning and experimenting with LSTM-based time-series forecasting. Predictions are for educational purposes only and should not be considered financial advice.
+_Your name_
